@@ -1,0 +1,7 @@
+{
+    "note": "this file is used by ModelTool - DO NOT REMOVE",
+    "advice": "buy low, sell high",
+    "version": "0.8.5",
+    "createLogGroup": true,
+    "type": "service"
+}
