@@ -1,4 +1,4 @@
-# Lambda Tool
+# Model Tool
 A tool to create and deploy Lambda Functions to AWS (for python things).
 
 
@@ -14,7 +14,7 @@ A tool to create and deploy Lambda Functions to AWS (for python things).
 ## Usage:
 Create a new lambda:
 ```
-Usage: lambdatool new [OPTIONS]
+Usage: modeltool new [OPTIONS]
 
 Options:
   -d, --directory TEXT  target directory for new Lambda, defaults to current
@@ -24,12 +24,12 @@ Options:
   --help                Show this message and exit.
 
 Example:
-lambdatool -sn example --region us-east-2 # make a Flask webservice in example/main.py
+modeltool -sn example --region us-east-2 # make a Flask webservice in example/main.py
 ```
 
 Deploy an existing lambda:
 ```
-Usage: lambdatool deploy [OPTIONS]
+Usage: modeltool deploy [OPTIONS]
 
 Options:
   -d, --directory TEXT  scratch directory for deploy, defaults to /tmp
@@ -41,7 +41,7 @@ Options:
   --help                Show this message and exit.
   
 Example:
-lambdatool deploy --region us-east-2 
+modeltool deploy --region us-east-2 
 ```
 *More details on AWS profile credentials [here](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html).*
 
@@ -63,7 +63,7 @@ Here is a possible workflow for creating the deployment of a new service with AW
 # Assume you are working on fantastic-function
 mkvirtualenv fantastic-function
 pip install LambdaTool
-lambdatool new -sn fantastic-function
+modeltool new -sn fantastic-function
 
 # Implement your function
 cd fantastic-function
@@ -71,7 +71,7 @@ cd fantastic-function
 # Fill in the INI file with your account info
 # If you have a default VPC most of the bits have been placed
 # in config/config.ini. You will probably need to just supply
-# an S3 bucket in which lambdatool can place artifacts.
+# an S3 bucket in which modeltool can place artifacts.
 vi config/config.ini
 
 # Actually implement your idea
@@ -84,7 +84,7 @@ vi requirements.txt
 
 # I encourage the use of revision control 
 git init && git add --all && git commit -m init
-lambdatool deploy
+modeltool deploy
 deactivate
 ```
 
@@ -92,7 +92,7 @@ deactivate
 
 ## Configuration file notes: .../config/config.ini
 At least one section is required in the .../config/config.ini file. This is the deployment data for the stage used in:
-```lambdatool deploy```
+```modeltool deploy```
 
 You can have as many stages as you wish but if you do not specify a stage in deployment *dev* is required.
 
