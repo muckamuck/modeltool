@@ -34,7 +34,7 @@ logging.basicConfig(level=logging.INFO,
                     format='[%(levelname)s] %(asctime)s (%(module)s) %(message)s',
                     datefmt='%Y/%m/%d-%H:%M:%S')
 
-logging.getLogger().setLevel(logging.INFO)
+logger = logging.getLogger().setLevel(logging.INFO)
 
 
 LAMBDATOOL_VERSION = '0.8.5'
@@ -589,6 +589,11 @@ class LambdaDeployer:
         try:
             logging.info('adding files with compression mode={}'.format(ZIP_MODES[compression]))
             zf = zipfile.ZipFile(self._package_name, mode='w')
+            model_files = os.listdir('models')
+
+            if len(model_files) != 1:
+                logger.error('expected 1 and only 1 model file in models, found %s', len(model_files))
+                sys.exit(1)
 
             for f in self.find_data('.'):
                 zf.write(f, compress_type=compression)

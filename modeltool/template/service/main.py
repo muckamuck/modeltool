@@ -36,6 +36,10 @@ def get_current_date():
 def post_predict():
     database_engine, cursor = connect_to_db(db_user, db_password, db_url, db_schema)
     file_list = glob.glob('models/*')
+
+    if len(file_list) != 1:
+        logger.warning('strange number of models')
+
     model_file = file_list[0]
     if '.pkl' in model_file:
         clf = Model_sklearn()
@@ -48,8 +52,15 @@ def post_predict():
     logger.info(predictions)
     end = time.time()
     response_time = round((end - start) * 1000, 2)
-    insert_model_stats(response_time, model_file.split('/')[-1], round(predictions, 3), database_engine, cursor,
-                       lambda_name)
+
+    insert_model_stats(
+        response_time, model_file.split('/')[-1],
+        round(predictions, 3),
+        database_engine,
+        cursor,
+        lambda_name
+    )
+
     database_engine.close()
     return {'predictions': predictions}
 

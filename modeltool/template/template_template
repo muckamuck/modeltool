@@ -69,6 +69,10 @@ ${environment_section}
         ${roleSpecification}
       Runtime: 
         Ref: runTime
+      FileSystemConfigs:
+        - Arn:
+            Fn::ImportValue: MaaSaccessPoint
+          LocalMountPath: "/mnt/maas"
       Timeout:
         Ref: timeOut
 ${reservedConcurrencyResource}
