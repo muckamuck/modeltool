@@ -20,12 +20,12 @@ def find_data(starting_dir, the_dir):
 setup(
     name='LambdaTool',
     version='0.8.5',
-    packages=['lambdatool'],
+    packages=['modeltool'],
     description='Python Lambda utility',
     author='Chuck Muckamuck',
     author_email='Chuck.Muckamuck@gmail.com',
     include_package_data=True,
-    package_data={'lambdatool': find_data('lambdatool', 'template')},
+    package_data={'modeltool': find_data('modeltool', 'template')},
     install_requires=[
         'boto3>=1.4.3',
         'GitPython>=2.1.7',
@@ -37,6 +37,6 @@ setup(
     ],
     entry_points="""
         [console_scripts]
-        lambdatool=lambdatool.command:cli
+        modeltool=modeltool.command:cli
     """
 )
