@@ -257,22 +257,32 @@ class LambdaCreator:
         file_name = '{}/config/config.ini'.format(destination_directory)
         with open(file_name, 'w') as ini_file:
             ini_file.write('[dev]\n')
-            if 'security_group' in env_info:
-                ini_file.write('security_group={}\n'.format(env_info['security_group']))
-            else:
-                ini_file.write('#security_group=ENTER_A_SECURITY_GROUP_FOR_VPC\n')
 
-            if 'subnets' in env_info:
-                wrk = str()
-                for subnet in env_info['subnets']:
-                    if len(wrk) == 0:
-                        wrk = subnet
-                    else:
-                        wrk = '{},{}'.format(wrk, subnet)
 
-                ini_file.write('subnets={}\n'.format(wrk))
+            security_group = input("Enter security gropup (smash enter to skip): ")
+            if security_group and security_group.startswith('sg-'):
+                ini_file.write('security_group={}\n'.format(security_group))
             else:
-                ini_file.write('#subnets=ENTER_A_COMMA_SEPARATED_LIST_OF_VPC_SUBNETS\n')
+                if 'security_group' in env_info:
+                    ini_file.write('security_group={}\n'.format(env_info['security_group']))
+                else:
+                    ini_file.write('#security_group=ENTER_A_SECURITY_GROUP_FOR_VPC\n')
+
+            subnets = input("Enter a CSV list of subnets (smash enter to skip): ")
+            if subnets and subnets.startswith('subnet'):
+                ini_file.write('subnets={}\n'.format(subnets))
+            else:
+                if 'subnets' in env_info:
+                    wrk = str()
+                    for subnet in env_info['subnets']:
+                        if len(wrk) == 0:
+                            wrk = subnet
+                        else:
+                            wrk = '{},{}'.format(wrk, subnet)
+
+                    ini_file.write('subnets={}\n'.format(wrk))
+                else:
+                    ini_file.write('#subnets=ENTER_A_COMMA_SEPARATED_LIST_OF_VPC_SUBNETS\n')
 
             if 'role' in env_info:
                 ini_file.write('role={}\n'.format(env_info['role']))
